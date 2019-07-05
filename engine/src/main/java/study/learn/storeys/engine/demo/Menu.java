@@ -31,11 +31,13 @@ public class Menu extends Interactlet {
         do {
             prompter.await(aChoice("Where do you want to go today?",
                 "demo", "First Demo",
+                "CorridorDeLaMuerte", "Corridor de la muerte",
                 "monster1", "One Monster",
                 "quit", "Stop playing"))
             .await(choice -> {
                 switch (choice) {
                     case "demo": new Demo().interact(prompter); break;
+                    case "CorridorDeLaMuerte": new CorridorDeLaMuerte().interact(prompter); break;
                     case "monster1": new Monster().interact(prompter); break;
                     case "quit": quit.set(true);
                 }
