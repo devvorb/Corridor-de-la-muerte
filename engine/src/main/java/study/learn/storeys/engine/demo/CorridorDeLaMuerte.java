@@ -37,7 +37,7 @@ public class CorridorDeLaMuerte extends Interactlet {
     List<String> rewards = ImmutableList.of("55 gold", "a health potion", "a sword");
     String reward = random(rewards);
 
-    List<String> cosmetics = ImmutableList.of("several flowers on the floor", "a small pond", "a shiny ruby");
+    List<String> cosmetics = ImmutableList.of("several flowers on the floor", "a small pond", "a shiny ruby", "a skeleton skull");
     String cosmetic = random(cosmetics);
 
     @Override public void interact(Prompter<Void> prompter) throws IOException {

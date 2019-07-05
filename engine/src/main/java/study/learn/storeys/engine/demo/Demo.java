@@ -26,7 +26,7 @@ import study.learn.storeys.engine.Prompter;
 public class Demo extends Interactlet {
 
     @Override public void interact(Prompter<Void> prompter) throws IOException {
-        prompter.await(aString("Hi there!  What's your name?"))
+        prompter.await(aString("Hello!  What's your name?"))
             .await(name -> aChoice("hello, " + name + ".  What's your favourite colour?",
                 "green", "Green, like Nature",
                 "yellow", "Yellow, like a Sunflower",
