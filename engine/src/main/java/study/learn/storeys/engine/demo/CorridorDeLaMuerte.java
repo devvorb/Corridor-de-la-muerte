@@ -34,7 +34,7 @@ public class CorridorDeLaMuerte extends Interactlet {
     List<String> guardians = ImmutableList.of("a monstean", "a dhrek", "a spider" );
     String guardian = random(guardians);
 
-    List<String> rewards = ImmutableList.of("55 gold", "a health potion", "a sword");
+    List<String> rewards = ImmutableList.of("55 gold", "a health potion", "an axe");
     String reward = random(rewards);
 
     List<String> cosmetics = ImmutableList.of("several flowers on the floor", "a small pond", "a shiny ruby", "a skeleton skull");
