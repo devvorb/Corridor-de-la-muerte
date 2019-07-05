@@ -1,5 +1,7 @@
-../gradlew :engine:build
+#!/bin/bash
 
-unzip -o build/distributions/engine-1.0.0-SNAPSHOT.zip -d build/distributions/
+../gradlew :engine:build && \
 
-build/distributions/engine-1.0.0-SNAPSHOT/bin/engine
+    unzip -o build/distributions/engine-1.0.0-SNAPSHOT.zip -d build/distributions/ && \
+
+    build/distributions/engine-1.0.0-SNAPSHOT/bin/engine

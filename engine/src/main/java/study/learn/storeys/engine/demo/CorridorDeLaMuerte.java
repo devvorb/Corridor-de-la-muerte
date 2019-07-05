@@ -31,27 +31,64 @@ public class CorridorDeLaMuerte extends Interactlet {
 
     Random rand = new Random();
 
-    List<String> guardians = ImmutableList.of("a monstean", "a dhrek", "a spider" );
-    String guardian = random(guardians);
+    List<Guardian> guardians;
 
     List<String> rewards = ImmutableList.of("55 gold", "a health potion", "a sword");
     String reward = random(rewards);
 
-    List<String> cosmetics = ImmutableList.of("several flowers on the floor", "a small pond", "a shiny ruby", "a skeleton skull");
+    List<String> cosmetics = ImmutableList.of("several flowers on the floor", "a small pond", "a shiny ruby",
+            "a skeleton skull");
     String cosmetic = random(cosmetics);
 
-    @Override public void interact(Prompter<Void> prompter) throws IOException {
+    CorridorDeLaMuerte() {
+        Guardian guardian1 = new Guardian();
+        guardian1.name = "monstean";
+        guardian1.Gdamage = 1;
+        guardian1.Gwin = 4;
+
+        Guardian guardian2 = new Guardian();
+        guardian2.name = "Dhrek";
+        guardian2.Gdamage = 4;
+        guardian2.Gwin = 7;
+
+        Guardian guardian3 = new Guardian();
+        guardian3.name = "spider";
+        guardian3.Gdamage = 7;
+        guardian3.Gwin = 2;
+
+        guardians = ImmutableList.of(guardian1, guardian2, guardian3);
+    }
+
+    @Override
+    public void interact(Prompter<Void> prompter) throws IOException {
         int playerHP = 10;
         int playerATT = 3;
 
-        prompter.await(aChoice("You have " + playerHP + " HP, and " + playerATT
-            + " damage.  You are in a room with " + reward + " guarded by " + guardian + " there is also " + cosmetic + ".",
-            "leave", "you leave to the next room",
-            "fight", "you challenge" + guardian + "to a battle"
-           ));
+        Guardian guardian = random(guardians);
+
+        prompter.await(aChoice(
+                "You have " + playerHP + " HP, and " + playerATT + " damage.  You are in a room with " + reward
+                        + " guarded by " + guardian.name + " there is also " + cosmetic + ".",
+                "leave", "you leave to the next room", "fight", "you challenge " + guardian.name + " to a battle"))
+                .await(choice -> {
+                    switch (choice) {
+                    case "fight": {
+                        if (playerATT >= guardian.Gwin) {
+                            return bye("you defeated the " + guardian.name);
+                        } else if (playerATT < guardian.Gwin) {
+                            return bye("you got defeated by the " + guardian.name);
+                        }
+                    }
+                        break;
+                    case "leave": {
+                        return bye();
+                    }
+                    }
+                    return bye();
+                });
     }
 
-    String random(List<String> pickFrom) {
+    <T> T random(List<T> pickFrom) {
         return pickFrom.get(rand.nextInt(pickFrom.size()));
     }
 }
