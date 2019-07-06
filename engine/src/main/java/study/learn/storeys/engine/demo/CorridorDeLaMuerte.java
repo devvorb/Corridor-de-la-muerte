@@ -68,7 +68,7 @@ public class CorridorDeLaMuerte extends Interactlet {
 
         prompter.await(aChoice(
                 "You have " + playerHP + " HP, and " + playerATT + " damage.  You are in a room with " + reward
-                        + " guarded by " + guardian.name + " there is also " + cosmetic + ".",
+                        + " guarded by " + guardian.name + ". There is also " + cosmetic + ".",
                 "leave", "you leave to the next room", "fight", "you challenge " + guardian.name + " to a battle"))
                 .await(choice -> {
                     switch (choice) {
