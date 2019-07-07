@@ -21,8 +21,10 @@ package study.learn.storeys.engine.demo;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import study.learn.storeys.engine.Interactlet;
 import study.learn.storeys.engine.Prompter;
@@ -34,7 +36,7 @@ public class InfiniteDungeon extends Interactlet {
     List<String> mobs = ImmutableList.of("and there are a monstean (m)", "and there are a Dhrek (d)", "and there are a Byder (b)");
     List<String> items = ImmutableList.of("20 gold (20g)", "a bomb (B)", "a key (K)");
     List<String> others = ImmutableList.of("a campfire (c)", "an arrow merchant ($A)", "a monstean (m)");
-    List<String> directions = ImmutableList.of(" UP", " DOWN", " LEFT", " RIGHT");
+    List<String> directions = ImmutableList.of("UP", "DOWN", "LEFT", "RIGHT");
 
     @Override
     public void interact(Prompter<Void> prompter) throws IOException {
@@ -51,10 +53,11 @@ public class InfiniteDungeon extends Interactlet {
             String direction1 = random(directions);
             String direction2 = random(directions);
             String direction3 = random(directions);
+            Set<String> availableDirections = ImmutableSet.of(direction1, direction2, direction3);
 
             prompter.await(aChoice(
-                    "This room " + environment + " " + mob + ", " + item + " and " + other + ". The paths go"
-                            + direction1 + direction2 + direction3,
+                    "This room " + environment + " " + mob + ", " + item + " and " + other + ". The paths go "
+                            + availableDirections,
                     "next room", "Generate a new room", "leave", "Stop playing")).await(choice -> {
                         switch (choice) {
                         case "next room": {
