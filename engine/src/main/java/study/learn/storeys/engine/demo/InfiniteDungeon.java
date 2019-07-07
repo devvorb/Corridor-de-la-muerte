@@ -30,46 +30,45 @@ import study.learn.storeys.engine.Prompter;
 public class InfiniteDungeon extends Interactlet {
 
     Random rand = new Random();
-
-
-
     List<String> environments = ImmutableList.of("is dark (D)", "is cold (C)", "is hot (H)");
-    String environment = random(environments);
-
     List<String> mobs = ImmutableList.of("and there are a monstean (m)", "and there are a Dhrek (d)", "and there are a Byder (b)");
-    String mob = random(mobs);
-
     List<String> items = ImmutableList.of("20 gold (20g)", "a bomb (B)", "a key (K)");
-    String item = random(items);
-
     List<String> others = ImmutableList.of("a campfire (c)", "an arrow merchant ($A)", "a monstean (m)");
-    String other = random(others);
-
     List<String> directions = ImmutableList.of(" UP", " DOWN", " LEFT", " RIGHT");
-    String direction1 = random(directions);
-    String direction2 = random(directions);
-    String direction3 = random(directions);
 
     @Override
     public void interact(Prompter<Void> prompter) throws IOException {
+        do {
 
+            String environment = random(environments);
 
-        prompter.await(aChoice(
-                "This room " + environment +" "+ mob +", "+ item +" and "+ other + ". The paths go" + direction1 + direction2 + direction3 ,
-                "next room", "Generate a new room",
-                "leave", "Stop playing"))
-                .await(choice -> {
-                    switch (choice) {
-                    case "next room": {
+            String mob = random(mobs);
 
-                    }
-                        break;
-                    case "leave": {
+            String item = random(items);
+
+            String other = random(others);
+
+            String direction1 = random(directions);
+            String direction2 = random(directions);
+            String direction3 = random(directions);
+
+            prompter.await(aChoice(
+                    "This room " + environment + " " + mob + ", " + item + " and " + other + ". The paths go"
+                            + direction1 + direction2 + direction3,
+                    "next room", "Generate a new room", "leave", "Stop playing")).await(choice -> {
+                        switch (choice) {
+                        case "next room": {
+
+                        }
+                            break;
+                        case "leave": {
+                            return bye();
+                        }
+                        }
                         return bye();
-                    }
-                    }
-                    return bye();
-                });
+                    });
+        } while (true);
+
     }
 
     <T> T random(List<T> pickFrom) {
