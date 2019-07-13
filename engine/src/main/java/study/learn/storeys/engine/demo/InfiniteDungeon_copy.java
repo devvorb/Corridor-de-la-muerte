@@ -19,6 +19,7 @@
 package study.learn.storeys.engine.demo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -33,14 +34,25 @@ import study.learn.storeys.engine.Prompter;
 // copie pour demander aux papas de faire efficacement les listes/ balancing (noter chances à la place de copier-coller)
 public class InfiniteDungeon_copy extends Interactlet {
 
+    static class Weighted {
+		Integer weight;
+        String thing;
+
+        Weighted(int weight, String thing) {
+            this.weight = weight;
+            this.thing = thing;
+		}
+    }
+
     Random rand = new Random();
 
     @Override
     public void interact(Prompter<Void> prompter) throws IOException {
         do {
-    List<String> tiers = ImmutableList.of("Wood ", "Stone ", "Iron ", "Titanium ");
 
-    String tier = random(tiers);
+    List<Weighted> weightedTiers = ImmutableList.of(new Weighted(9, "Wood "), new Weighted(12, "Stone "), new Weighted(6, "Iron "),new Weighted(1, "Titanium "));
+    String tier = weigthedRandom(weightedTiers);
+
 
     List<String> environments = ImmutableList.of("is Burning hot (H+)", "is Cold (C)", "is Dark (D)", "is Freezing cold (C+)", "is Frozen (F)", "has a Frozen lake (Lf)", "is Hot (H)", "has a Lake (L)", "has Parkour (P)", "is Poisoned (p)", "has Titanium ore (To)", "has a Quarter Lucky Gem (1/4)", "is Webbed (W)", "is filled with Water (~)", "has a tree (T)");
     List<String> mobs = ImmutableList.of("Andidozuba (!p)", "Axter (Ax)", "Byder (sB)", "Clubster (C)", "Cow (c)", "Daggster (Dg)", "Darkow (Dw)", "Dhrek (D)", "Flion (Fl)", "Hammster (H)", "Icetry (IT)", "Lightfly (l)", "Lochdeep (L)", "a Quarter Lucky Gem (1/4)", "a Wobl (W)", "a Priz (P)", "a Poider (sP)", "a Monstean (m)", "a Monspear (mS)", "a Maunlet (M)" );
@@ -85,5 +97,19 @@ public class InfiniteDungeon_copy extends Interactlet {
 
     <T> T random(List<T> pickFrom) {
         return pickFrom.get(rand.nextInt(pickFrom.size()));
+    }
+
+    String weigthedRandom(List<Weighted> pickFrom) {
+        Integer sum = 0;
+        for (Weighted pick : pickFrom) {
+            sum = sum + pick.weight;
+        }
+        List<String> allOfThem = new ArrayList<>(sum);
+        for (Weighted pick : pickFrom) {
+            for (int i=1; i<=pick.weight; i++) {
+                allOfThem.add(pick.thing);
+            }
+        }
+        return allOfThem.get(rand.nextInt(allOfThem.size()));
     }
 }
